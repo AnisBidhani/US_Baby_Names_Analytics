@@ -1,0 +1,19 @@
+select * from (select * from us_baby_names_db.mynationalnames F where F.gender = 'F' order by F.count DESC limit 5)subq1
+union
+select * from (select * from us_baby_names_db.mynationalnames M where M.gender = 'M' order by M.count DESC limit 5)subq2;
+
+create table top_national_names AS
+select * from (select * from us_baby_names_db.mynationalnames F where F.gender = 'F' order by F.count DESC limit 10)subq1
+union
+select * from (select * from us_baby_names_db.mynationalnames M where M.gender = 'M' order by M.count DESC limit 10)subq2;
+
+
+select * from (select * from us_baby_names_db.mystatenames F where F.gender = 'F' order by F.count DESC limit 5)subq1
+union
+select * from (select * from us_baby_names_db.mystatenames M where M.gender = 'M' order by M.count DESC limit 5)subq2;
+
+
+create table top_state_names AS
+select * from (select * from us_baby_names_db.mystatenames F where F.gender = 'F' order by F.count DESC limit 10)subq1
+union
+select * from (select * from us_baby_names_db.mystatenames M where M.gender = 'M' order by M.count DESC limit 10)subq2;
