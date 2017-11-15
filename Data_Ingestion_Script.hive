@@ -1,0 +1,68 @@
+CREATE DATABASE IF NOT EXISTS us_baby_names_db;
+
+drop table if exists us_baby_names_db.NationalNames;
+
+CREATE EXTERNAL TABLE IF NOT EXISTS us_baby_names_db.NationalNames (
+	Id INT,
+	Name STRING,
+	Year STRING,
+	Gender CHAR(1),
+	Count INT
+)
+COMMENT 'A table for the NATIONAL US baby names data.'
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+LOCATION '/user/hdadmin/USBabyNamesAnalytics/RawData/National/';
+
+
+
+drop table if exists us_baby_names_db.StateNames;
+
+CREATE EXTERNAL TABLE IF NOT EXISTS us_baby_names_db.StateNames (
+	Id INT,
+	Name STRING,
+	Year STRING,
+	Gender CHAR(1),
+	State STRING,
+	Count INT
+)
+COMMENT 'A table for the STATE US baby names data.'
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+LOCATION '/user/hdadmin/USBabyNamesAnalytics/RawData/State/';
+
+drop table if exists us_baby_names_db.myNationalNames;
+
+CREATE TABLE IF NOT EXISTS us_baby_names_db.myNationalNames (
+	Id INT,
+	Name STRING,
+	Year STRING,
+	Gender CHAR(1),
+	Count INT
+)
+COMMENT 'Data about NATIONAL US baby names from a public database.'
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS ORC;
+
+
+
+drop table if exists us_baby_names_db.myStateNames;
+
+CREATE TABLE IF NOT EXISTS us_baby_names_db.myStateNames (
+	Id INT,
+	Name STRING,
+	Year STRING,
+	Gender CHAR(1),
+	State STRING,
+	Count INT
+)
+COMMENT 'Data about STATE US baby names from a public database.'
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS ORC;
+
+INSERT OVERWRITE TABLE us_baby_names_db.mynationalnames SELECT * FROM us_baby_names_db.nationalnames;
+INSERT OVERWRITE TABLE us_baby_names_db.mystatenames SELECT * FROM us_baby_names_db.statenames;
